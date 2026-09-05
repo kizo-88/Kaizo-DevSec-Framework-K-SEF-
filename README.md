@@ -126,34 +126,31 @@ flowchart TD
 
 ## 📊 Vulnerability & Finding Matrix Overview
 
-This framework provides complete architectural mitigation, configuration files, and code templates for all identified scan findings and CWEs:
-
-| Severity | Finding / Vulnerability Description | Primary CWE | Impact & Root Cause | Direct Fix / Mitigation |
-| :--- | :--- | :--- | :--- | :--- |
-| **CRITICAL** | Hardcoded Administrative Credentials in Client Assets | `CWE-798` | Hardcoded secrets/passwords bundled into frontend build files. | Environment variables, Secret Managers, `.gitleaks` pre-commit hooks. |
-| **HIGH** | Public Exposure of Relational Database Daemon | `CWE-284` | DB port (3306, 5432) bound to `0.0.0.0` or open security group. | Bind to `127.0.0.1`/VPC private subnet, SSH Bastion, UFW firewall. |
-| **MEDIUM** | Cross-Domain Misconfiguration (CORS) | `CWE-264` / `CWE-942` | Wildcard `*` with credentials or overly permissive `Access-Control-Allow-Origin`. | Whitelist strict origins, reject null origins, omit `credentials` if public. |
-| **MEDIUM** | Sub Resource Integrity (SRI) Attribute Missing | `CWE-345` | CDN-hosted `<script>` or `<link>` without integrity hash check. | Add `integrity="sha384-..."` and `crossorigin="anonymous"`. |
-| **MEDIUM** | Content Security Policy (CSP) Header Not Set | `CWE-693` | Browser executes unauthorized inline scripts or fetches malicious resources. | Configure robust `default-src 'self'`, script nonces/hashes, frame restrictions. |
-| **MEDIUM** | Missing Anti-clickjacking Header | `CWE-1021` | Page can be embedded in an `<iframe>` enabling UI redress / clickjacking. | Set `X-Frame-Options: DENY` / `SAMEORIGIN` & CSP `frame-ancestors 'self'`. |
-| **MEDIUM** | Absence of Anti-CSRF Tokens | `CWE-352` | State-changing POST/PUT/DELETE requests executed without anti-forgery check. | Implement Synchronizer Token or Double-Submit Cookie with `SameSite=Strict`. |
-| **MEDIUM** | Session ID in URL Rewrite | `CWE-598` | Session tokens passed in query parameters, logged in history, logs, & referrers. | Store tokens strictly in `HttpOnly` cookies or memory; disable URL rewriting. |
-| **LOW** | Strict-Transport-Security (HSTS) Header Not Set | `CWE-319` | Traffic vulnerable to SSL-stripping and man-in-the-middle downgrade attacks. | Enable `Strict-Transport-Security: max-age=63072000; includeSubDomains; preload`. |
-| **LOW** | X-Content-Type-Options Header Missing | `CWE-693` | MIME-sniffing allows non-executable files to be executed as scripts. | Set `X-Content-Type-Options: nosniff` globally. |
-| **LOW** | Big Redirect Detected (Potential Sensitive Leak) | `CWE-201` | Large response body sent along with 301/302 redirect revealing cached data. | Strip response body on 3xx redirects; use strict HTTP redirect middleware. |
-| **LOW** | Cookie with SameSite Attribute None | `CWE-1275` | Cookies sent on cross-site requests without explicit CSRF protection. | Enforce `SameSite=Lax` or `SameSite=Strict` (use `None` only with `Secure`). |
-| **LOW** | Cookie No HttpOnly Flag | `CWE-1004` | Session cookies accessible via `document.cookie` in JavaScript (XSS theft). | Mark all authentication/session cookies as `HttpOnly: true`. |
-| **LOW** | Cookie without SameSite Attribute | `CWE-1275` | Browser relies on default behavior; may risk cross-site request leakage. | Explicitly define `SameSite=Lax` or `Strict` on every cookie. |
-| **LOW** | Timestamp Disclosure - Unix | `CWE-497` | Server timestamps in response headers or body leak internal system state/clocks. | Sanitize internal metadata headers (`Date` general vs custom debug epochs). |
-| **LOW** | Cross-Domain JavaScript Source File Inclusion | `CWE-829` | 3rd-party script inclusion without domain validation or SRI. | Self-host critical libraries or pin to vetted CDNs with SRI and CSP. |
-| **LOW** | HTTPS Content Available via HTTP | `CWE-311` | Plaintext HTTP requests not redirected to HTTPS, exposing traffic. | Enforce 301 Permanent Redirect to HTTPS at Web Server / Load Balancer. |
-| **INFO** | Exposure of Firebase Web API Key | `CWE-798` | Firebase API keys visible in client bundles. | Clarify Firebase API key nature + enforce granular Firebase Security Rules & App Check. |
-| **INFO** | Information Disclosure - Sensitive Information in URL | `CWE-598` | Sensitive parameters (PII, tokens) placed in URL query strings. | Transmit sensitive payloads via encrypted POST/PUT JSON request bodies. |
-| **INFO** | Information Disclosure - Info in Browser localStorage | `CWE-359` | JWTs or sensitive user data stored in unencrypted `localStorage` (XSS vulnerable). | Store session state in `HttpOnly` Secure cookies or short-lived memory state. |
-| **INFO** | Retrieved from Cache & Re-examine Cache-control Directives | `CWE-525` | Authenticated responses stored in intermediate or browser caches. | Set `Cache-Control: no-store, no-cache, must-revalidate, private` on sensitive endpoints. |
-| **INFO** | Loosely Scoped Cookie | `CWE-565` | Cookie `Domain` set to parent domain (`.domain.com`) exposing subdomains. | Omit `Domain` attribute to restrict cookie strictly to the origin host. |
-| **INFO** | Session Management Response Identified | — | Scanner alerts when login/logout response changes session tokens. | Validate correct session lifecycle (session regeneration upon auth changes). |
-| **INFO** | User Agent Fuzzer Noise | — | Scanner detects behavior variance on abnormal `User-Agent` strings. | Implement uniform error handling and rate-limiting for scanner fuzzing. |
+| CWE | Vulnerability / Finding Description |
+| :--- | :--- |
+| `CWE-798` | Hardcoded Administrative Credentials in Client Assets |
+| `CWE-284` | Public Exposure of Relational Database Daemon |
+| `CWE-264` / `CWE-942` | Cross-Domain Misconfiguration (CORS) |
+| `CWE-345` | Sub Resource Integrity (SRI) Attribute Missing |
+| `CWE-693` | Content Security Policy (CSP) Header Not Set |
+| `CWE-1021` | Missing Anti-clickjacking Header |
+| `CWE-352` | Absence of Anti-CSRF Tokens |
+| `CWE-598` | Session ID in URL Rewrite |
+| `CWE-319` | Strict-Transport-Security (HSTS) Header Not Set |
+| `CWE-693` | X-Content-Type-Options Header Missing |
+| `CWE-201` | Big Redirect Detected (Potential Sensitive Information Leak) |
+| `CWE-1275` | Cookie with SameSite Attribute None / Missing SameSite |
+| `CWE-1004` | Cookie No HttpOnly Flag |
+| `CWE-497` | Timestamp Disclosure - Unix |
+| `CWE-829` | Cross-Domain JavaScript Source File Inclusion |
+| `CWE-311` | HTTPS Content Available via HTTP |
+| `CWE-798` | Exposure of Firebase Web API Key |
+| `CWE-598` | Information Disclosure - Sensitive Information in URL |
+| `CWE-359` | Information Disclosure - Information in Browser localStorage |
+| `CWE-525` | Retrieved from Cache & Re-examine Cache-control Directives |
+| `CWE-565` | Loosely Scoped Cookie |
+| — | Session Management Response Identified |
+| — | User Agent Fuzzer Noise |
 
 ---
 
