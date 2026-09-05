@@ -1,0 +1,52 @@
+# ==============================================================================
+# Kaizo DevSec Framework - Gitleaks Secret Detection Rules
+# Mitigates: CWE-798 (Use of Hard-coded Credentials)
+# ==============================================================================
+
+title = "Kaizo DevSec Gitleaks Configuration"
+
+[extend]
+useDefault = true
+
+# Custom rule for Generic API & Admin Keys
+[[rules]]
+description = "Generic High-Entropy Admin Secret / API Key"
+id = "kaizo-generic-admin-secret"
+regex = '''(?i)(admin[_-]?secret|service[_-]?secret|master[_-]?key|jwt[_-]?secret)\s*[:=]\s*['"][a-zA-Z0-9_\-\.]{16,}['"]'''
+entropy = 3.5
+keywords = [
+    "admin_secret",
+    "service_secret",
+    "master_key",
+    "jwt_secret",
+]
+
+# Custom rule for Database Connection Strings
+[[rules]]
+description = "Hardcoded Database Connection URI"
+id = "kaizo-database-connection-uri"
+regex = '''(?i)(postgres|postgresql|mysql|mongodb|redis):\/\/[a-zA-Z0-9_\-]+:[a-zA-Z0-9_\-\.\@\$\%\^\&\*]+@[a-zA-Z0-9_\-\.]+:[0-9]+\/[a-zA-Z0-9_\-]+'''
+keywords = [
+    "postgres://",
+    "postgresql://",
+    "mysql://",
+    "mongodb://",
+    "redis://",
+]
+
+# Custom rule for Firebase Admin Private Keys (Distinct from public Web API key)
+[[rules]]
+description = "Firebase / GCP Service Account Private Key"
+id = "kaizo-firebase-admin-private-key"
+regex = '''-----BEGIN PRIVATE KEY-----[a-zA-Z0-9\/\+\s\=]+-----END PRIVATE KEY-----'''
+keywords = [
+    "BEGIN PRIVATE KEY",
+]
+
+[allowlist]
+description = "Global allowlist for harmless fixtures and test examples"
+paths = [
+    '''(^|/)(test|tests|spec|specs|fixtures)/''',
+    '''package-lock\.json''',
+    '''pnpm-lock\.yaml''',
+]
