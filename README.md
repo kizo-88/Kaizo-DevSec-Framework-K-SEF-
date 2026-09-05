@@ -162,8 +162,18 @@ This framework provides complete architectural mitigation, configuration files, 
 │       ├── .env.example                       # Base environment variable template
 │       ├── .gitignore                         # Secure baseline ignore file
 │       └── security-bootstrap.ts              # Drop-in Node/Express/Next security initializer
-└── 07-system-archetypes-focus/
-    └── system-types-security-blueprint.md     # Deep Dives for SaaS, E-Commerce, APIs, SPAs, AI/LLMs, Admin & WebSockets
+├── 07-system-archetypes-focus/
+│   └── system-types-security-blueprint.md     # Deep Dives for SaaS, E-Commerce, APIs, SPAs, AI/LLMs, Admin & WebSockets
+├── 08-platform-security-modules/
+│   ├── supabase-security-playbook.md          # Supabase RLS, Anon vs Service Role, Storage & Functions
+│   ├── supabase-rls-templates.sql             # Battle-tested Supabase Postgres RLS SQL Policies
+│   ├── firebase-security-playbook.md          # Firestore, Storage Rules, App Check & GCP API Key Hardening
+│   ├── firestore.rules                        # Production Firestore Security Rules Template
+│   ├── storage.rules                          # Production Firebase Storage Security Rules Template
+│   ├── vm-linux-hardening-playbook.md         # Linux VM Hardening (SSH, UFW, Fail2ban, Sysctl, Docker)
+│   └── vm-hardening-script.sh                 # One-click Ubuntu/Debian VM Automated Hardening Script
+└── 09-framework-improvements-roadmap/
+    └── framework-evolution-roadmap.md         # Strategic Enhancements: SBOM, Sigstore, Vault, eBPF & AI Guardrails
 ```
 
 ---

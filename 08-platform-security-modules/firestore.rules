@@ -1,0 +1,58 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper functions
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return signedIn() && request.auth.uid == userId;
+    }
+
+    function hasRole(role) {
+      return signedIn() && request.auth.token.role == role;
+    }
+
+    // Default Deny: All unmatched documents are blocked
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Users Collection
+    match /users/{userId} {
+      allow read: if signedIn();
+      allow create: if isOwner(userId) && request.resource.data.role == 'user';
+      allow update: if isOwner(userId) 
+        && !request.resource.data.diff(resource.data).affectedKeys().hasAny(['role', 'isSuspended', 'createdAt']);
+      allow delete: if hasRole('admin');
+    }
+
+    // Tenant / Organization Workspace
+    match /workspaces/{workspaceId} {
+      allow read: if signedIn() && (
+        resource.data.ownerId == request.auth.uid ||
+        request.auth.uid in resource.data.memberIds
+      );
+      
+      allow create: if signedIn() && request.resource.data.ownerId == request.auth.uid;
+      
+      allow update, delete: if signedIn() && resource.data.ownerId == request.auth.uid;
+
+      // Subcollections within workspace
+      match /items/{itemId} {
+        allow read, write: if signedIn() && (
+          get(/databases/$(database)/documents/workspaces/$(workspaceId)).data.ownerId == request.auth.uid ||
+          request.auth.uid in get(/databases/$(database)/documents/workspaces/$(workspaceId)).data.memberIds
+        );
+      }
+    }
+
+    // Read-only Public App Config
+    match /public_config/{configId} {
+      allow read: if true;
+      allow write: if hasRole('admin');
+    }
+  }
+}
