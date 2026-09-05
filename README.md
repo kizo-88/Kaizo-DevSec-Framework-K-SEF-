@@ -14,13 +14,46 @@
 
 ---
 
+## ⚡ Instant CLI Usage (One-Command Security)
+
+Whenever you start a new codebase or want to audit an existing one, run the **K-SEF CLI** directly with a single command:
+
+```bash
+# 🚀 1. Scaffold security guardrails into any project (Interactive Wizard)
+npx kaizo-devsec init
+
+# 🔍 2. Audit current project for missing headers, leaked .env, & vulnerabilities
+npx kaizo-devsec audit
+
+# 🔐 3. Generate Subresource Integrity (SRI) hashes for CDN scripts
+npx kaizo-devsec sri https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.8/axios.min.js
+
+# 📜 4. Instantly drop platform rules (supabase | firebase | docker | vm)
+npx kaizo-devsec rules supabase
+```
+
+### 💻 One-Line Global Installation:
+
+```bash
+# Linux / macOS
+curl -fsSL https://raw.githubusercontent.com/kizo-88/Kaizo-DevSec-Framework-K-SEF-/main/install.sh | bash
+
+# Windows PowerShell
+irm https://raw.githubusercontent.com/kizo-88/Kaizo-DevSec-Framework-K-SEF-/main/install.ps1 | iex
+```
+
+Once installed globally, simply run `k-sef init` in any terminal!
+
+---
+
 ## 📑 Table of Contents
 
-1. [Executive Summary & Security Philosophy](#-executive-summary--security-philosophy)
-2. [Framework Architecture & 7-Phase SDLC Flow](#-framework-architecture--7-phase-sdlc-flow)
-3. [Vulnerability & Finding Matrix Overview](#-vulnerability--finding-matrix-overview)
-4. [Directory & Documentation Structure](#-directory--documentation-structure)
-5. [Quick Start & Developer Daily Workflow](#-quick-start--developer-daily-workflow)
+1. [Instant CLI Usage](#-instant-cli-usage-one-command-security)
+2. [Executive Summary & Security Philosophy](#-executive-summary--security-philosophy)
+3. [Framework Architecture & 7-Phase SDLC Flow](#-framework-architecture--7-phase-sdlc-flow)
+4. [Vulnerability & Finding Matrix Overview](#-vulnerability--finding-matrix-overview)
+5. [Directory & Documentation Structure](#-directory--documentation-structure)
+6. [Quick Start & Developer Daily Workflow](#-quick-start--developer-daily-workflow)
 
 ---
 

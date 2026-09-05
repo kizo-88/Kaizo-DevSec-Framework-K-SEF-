@@ -1,0 +1,41 @@
+{
+  "name": "kaizo-devsec",
+  "version": "1.1.0",
+  "description": "Kaizo DevSec Framework (K-SEF) - Enterprise Developer Security CLI & Automated Guardrails",
+  "main": "bin/k-sef.js",
+  "bin": {
+    "k-sef": "./bin/k-sef.js",
+    "kaizo-devsec": "./bin/k-sef.js"
+  },
+  "scripts": {
+    "start": "node bin/k-sef.js",
+    "audit": "node bin/k-sef.js audit",
+    "test": "node bin/k-sef.js --help"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kizo-88/Kaizo-DevSec-Framework-K-SEF-.git"
+  },
+  "keywords": [
+    "security",
+    "devsecops",
+    "ssdlc",
+    "cybersecurity",
+    "owasp",
+    "cwe",
+    "helmet",
+    "rls",
+    "supabase",
+    "firebase",
+    "hardening"
+  ],
+  "author": "Kaizo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kizo-88/Kaizo-DevSec-Framework-K-SEF-/issues"
+  },
+  "homepage": "https://github.com/kizo-88/Kaizo-DevSec-Framework-K-SEF-#readme",
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
