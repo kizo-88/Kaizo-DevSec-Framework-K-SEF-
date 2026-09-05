@@ -130,23 +130,36 @@ flowchart TD
 | :--- | :--- |
 | `CWE-798` | Hardcoded Administrative Credentials in Client Assets |
 | `CWE-284` | Public Exposure of Relational Database Daemon |
+| `CWE-89` | SQL Injection (SQLi) - Unparameterized Queries |
+| `CWE-79` | Cross-Site Scripting (XSS) - Reflected, Stored, DOM XSS |
+| `CWE-78` | OS Command Injection - Shell Command Execution Flaws |
+| `CWE-918` | Server-Side Request Forgery (SSRF) - Unvalidated External URL Fetches |
+| `CWE-22` / `CWE-23` | Path Traversal - Arbitrary File System Read/Write |
+| `CWE-639` / `CWE-862` | Broken Object Level Authorization (BOLA / IDOR) |
 | `CWE-264` / `CWE-942` | Cross-Domain Misconfiguration (CORS) |
 | `CWE-345` | Sub Resource Integrity (SRI) Attribute Missing |
 | `CWE-693` | Content Security Policy (CSP) Header Not Set |
-| `CWE-1021` | Missing Anti-clickjacking Header |
+| `CWE-1021` | Missing Anti-clickjacking Header (X-Frame-Options / frame-ancestors) |
 | `CWE-352` | Absence of Anti-CSRF Tokens |
-| `CWE-598` | Session ID in URL Rewrite |
+| `CWE-384` | Session Fixation - Reusing Session Tokens Post-Login |
+| `CWE-598` | Session ID & Sensitive Information in URL Query Strings |
+| `CWE-1321` | Prototype Pollution - Object Prototype Hijacking |
+| `CWE-362` | Race Conditions - Concurrent Execution / Financial Balance Exploits |
+| `CWE-327` / `CWE-312` | Broken Cryptography & Plaintext Password Storage |
+| `CWE-1333` | Regular Expression Denial of Service (ReDoS) |
+| `CWE-943` | NoSQL Injection - MongoDB Query Operator Injection |
+| `CWE-601` | Open URL Redirection to Untrusted Sites |
+| `CWE-1426` | LLM Prompt Injection & Untrusted Prompt Boundary Bypass |
 | `CWE-319` | Strict-Transport-Security (HSTS) Header Not Set |
-| `CWE-693` | X-Content-Type-Options Header Missing |
-| `CWE-201` | Big Redirect Detected (Potential Sensitive Information Leak) |
+| `CWE-693` | X-Content-Type-Options Header Missing (MIME Sniffing) |
+| `CWE-201` | Big Redirect Detected (Sensitive Information Leak in 3xx Body) |
 | `CWE-1275` | Cookie with SameSite Attribute None / Missing SameSite |
 | `CWE-1004` | Cookie No HttpOnly Flag |
-| `CWE-497` | Timestamp Disclosure - Unix |
+| `CWE-497` | Timestamp Disclosure - Unix Internal System Clocks |
 | `CWE-829` | Cross-Domain JavaScript Source File Inclusion |
-| `CWE-311` | HTTPS Content Available via HTTP |
+| `CWE-311` | HTTPS Content Available via Plaintext HTTP |
 | `CWE-798` | Exposure of Firebase Web API Key |
-| `CWE-598` | Information Disclosure - Sensitive Information in URL |
-| `CWE-359` | Information Disclosure - Information in Browser localStorage |
+| `CWE-359` | Information Disclosure - Sensitive Information in Browser localStorage |
 | `CWE-525` | Retrieved from Cache & Re-examine Cache-control Directives |
 | `CWE-565` | Loosely Scoped Cookie |
 | — | Session Management Response Identified |
@@ -165,6 +178,7 @@ flowchart TD
 │   └── cicd-security-gates.md                 # CI/CD Automated Pipelines (GitHub Actions/GitLab)
 ├── 02-vulnerability-matrix/
 │   ├── vulnerability-catalog.md               # Complete Catalog of CWEs, CVSS, and Fixes
+│   ├── advanced-cwe-playbooks.md              # Deep Dive: SQLi, XSS, Command Injection, SSRF, Path Traversal, ReDoS, BOLA
 │   ├── critical-and-high-playbooks.md         # Deep Dive: CWE-798 & CWE-284 (DB & Hardcoded Secrets)
 │   ├── medium-severity-playbooks.md           # Deep Dive: CORS, SRI, CSP, Clickjacking, CSRF, URL Session
 │   ├── low-severity-playbooks.md              # Deep Dive: HSTS, Nosniff, Big Redirect, Cookies, Timestamps
